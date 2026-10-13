@@ -88,12 +88,13 @@
             Um encontro escrito no tempo
             <span></span>
           </p>
+          <p class="couple-name">Hyago <span>&amp;</span> Ana</p>
           <h1 id="mainTitle">
             Cada segundo deixa a gente
             <em>mais perto.</em>
           </h1>
           <p class="hero__subtitle">
-            Duas histórias, um destino e um abraço marcado para outubro.
+            Dia 16 de outubro, a distância dá lugar ao nosso abraço.
           </p>
         </div>
 
@@ -231,12 +232,32 @@
             <span class="progress-story__date">16 OUT</span>
           </div>
 
-          <button class="open-letter-button" id="openLetter" type="button">
-            <i class="fa-regular fa-envelope-open" aria-hidden="true"></i>
-            Abrir nossa carta
+          <p class="letter-invitation">Ana, guardei algumas palavras para você. A carta abre no dia 16 de outubro.</p>
+          <button class="open-letter-button" id="openLetter" type="button" disabled>
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <span id="letterButtonText">Disponível em 16 de outubro</span>
           </button>
 
           <p class="screen-reader-count" id="screenReaderCount" aria-live="polite"></p>
+        </section>
+
+        <section class="our-story" aria-labelledby="storyTitle">
+          <p class="eyebrow">Da espera ao abraço</p>
+          <h2 id="storyTitle">De uma conversa à vontade de ficar.</h2>
+          <ol class="story-moments">
+            <li>
+              <span class="story-moments__number" aria-hidden="true">01</span>
+              <div><h3>Um encontro no OmeTV</h3><p>No OmeTV, uma conversa aproximou nossos caminhos. A gente continuou se falando e, aos poucos, você foi se tornando alguém que eu queria ter por perto.</p></div>
+            </li>
+            <li>
+              <span class="story-moments__number" aria-hidden="true">02</span>
+              <div><h3>Você fez a diferença</h3><p>Nas nossas conversas, conheci uma menina incrível: paciente, que me ajudou e por quem fui me apaixonando.</p></div>
+            </li>
+            <li>
+              <span class="story-moments__number" aria-hidden="true">03</span>
+              <div><h3>A vontade de construir algo</h3><p>Decidimos nos conhecer pessoalmente e tentar algo sério. Se tudo der certo, quero que a nossa história chegue até o casamento.</p></div>
+            </li>
+          </ol>
         </section>
 
         <div class="promise-strip" aria-label="Planos para o encontro">
@@ -261,6 +282,72 @@
               <strong>Uma memória para guardar</strong>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section class="book-section" id="nosso-livro" aria-labelledby="bookTitle">
+        <div class="book-intro">
+          <p class="eyebrow">Uma história para guardar</p>
+          <h2 id="bookTitle">A nossa história, <em>contada por mim.</em></h2>
+          <p>Ana, este é um pedacinho da nossa história, do jeito que eu vivi. Continue rolando para abrir o livro e descobrir cada capítulo.</p>
+        </div>
+        <div class="book-scroll-scene" id="bookScrollScene">
+          <div class="book-sticky">
+            <p class="book-scene-label">Hyago &amp; Ana <span>· O nosso livro</span></p>
+            <div class="book-stage">
+              <div class="storybook" id="storybook" role="region" aria-label="Livro de Hyago e Ana" aria-describedby="bookHint">
+                <div class="book-base book-base--right book-ending" id="bookEnding" aria-label="Continua" aria-hidden="true"><span>Continua…</span></div>
+                <div class="book-leaf" data-leaf="0">
+                  <article class="book-page book-page--front book-cover" aria-label="Capa">
+                    <div class="book-cover__frame">
+                    <span class="book-cover__eyebrow">Uma história de nós dois</span>
+                    <span class="book-cover__heart" aria-hidden="true">♥</span>
+                    <h3>Hyago<br /><span>&amp;</span> Ana</h3>
+                    <p>Do acaso<br />ao nosso encontro.</p>
+                    <span class="book-cover__date">Outubro · 2026</span>
+                  </div>
+                  </article>
+                  <article class="book-page book-page--back book-dedication" aria-label="Como tudo começou">
+                    <span class="book-page__chapter">Capítulo I</span><h3>Uma conversa<br />no OmeTV.</h3><p>Foi no OmeTV que nossos caminhos se cruzaram. Entre tantas conversas possíveis, foi a sua que eu quis continuar.</p><p>Aos poucos, uma conversa virou carinho, e o carinho virou essa vontade de conhecer você de perto.</p><span class="book-page__number">01</span>
+                  </article>
+                </div>
+                <div class="book-leaf" data-leaf="1">
+                  <article class="book-page book-page--front book-dedication" aria-label="Dedicatória">
+                    <span class="book-page__chapter">Para você</span><h3>Ana,</h3><p>Você teve paciência comigo, me ajudou e foi conquistando um lugar especial na minha vida.</p><p>Ainda vamos nos conhecer pessoalmente. Mas eu já sei: estou apaixonado.</p><p class="book-signature">Com carinho,<br />Hyago</p><span class="book-page__number">02</span>
+                  </article>
+                  <article class="book-page book-page--back book-dedication" aria-label="O que eu encontrei em você">
+                    <span class="book-page__chapter">Capítulo II</span><h3>Muito além<br />da tela.</h3><p>Quanto mais conversávamos, mais eu conhecia essa menina incrível que você é.</p><p>Sua paciência e o seu apoio fizeram diferença para mim. E eu fui me apaixonando.</p><span class="book-page__number">03</span>
+                  </article>
+                </div>
+                <div class="book-leaf" data-leaf="2">
+                  <article class="book-page book-page--front book-photo" aria-label="Foto de Hyago">
+                    <figure><picture><source srcset="hyago.avif" type="image/avif" /><img src="hyago.jpeg" alt="Hyago diante do espelho" width="960" height="1280" loading="lazy" decoding="async" /></picture><figcaption><strong>Hyago, daqui.</strong><span>Com um abraço guardado para você.</span></figcaption></figure><span class="book-page__number">04</span>
+                  </article>
+                  <article class="book-page book-page--back book-photo" aria-label="Foto de Ana">
+                    <figure><picture><source srcset="Ana-Clara.avif" type="image/avif" /><img src="Ana%20Clara.jpeg" alt="Ana usando um vestido vermelho" width="960" height="1280" loading="lazy" decoding="async" /></picture><figcaption><strong>Ana, daí.</strong><span>Incrível, paciente e especial para mim.</span></figcaption></figure><span class="book-page__number">05</span>
+                  </article>
+                </div>
+                <div class="book-leaf" data-leaf="3">
+                  <article class="book-page book-page--front book-dedication" aria-label="O próximo capítulo">
+                    <span class="book-page__chapter">Capítulo III</span><h3>Um passo<br />de cada vez.</h3><p>Decidimos nos conhecer pessoalmente e tentar algo sério.</p><p>Se tudo der certo, quero que a nossa história vá além do namoro e chegue até o casamento.</p><p class="book-signature">Com você,<br />Hyago.</p><span class="book-page__number">06</span>
+                  </article>
+                  <article class="book-page book-page--back book-dedication" aria-label="Nossa história continua">
+                    <span class="book-page__chapter">Só o começo</span>
+                    <h3>Ainda temos<br />tanto para viver.</h3>
+                    <p>O nosso encontro é o próximo capítulo. O resto da história, a gente escreve juntos.</p>
+                    <p class="book-signature">Com você,<br />Hyago.</p>
+                    <span class="book-page__number">07</span>
+                  </article>
+                </div>
+                <div class="book-spine" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="book-reading-status">
+              <p id="bookStatus" role="status" aria-live="polite" aria-atomic="true">A capa · Hyago &amp; Ana</p>
+              <div class="book-scroll-progress" aria-hidden="true"><span id="bookProgress"></span></div>
+              <p class="book-hint" id="bookHint">Continue rolando para virar as páginas.</p>
+            </div>
+          </div>
         </div>
       </section>
 

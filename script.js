@@ -111,7 +111,7 @@
   }
 
   function openLetter() {
-    if (letterDialog.open) return;
+    if (Date.now() < MEETING_AT || letterDialog.open) return;
 
     if (typeof letterDialog.showModal === "function") {
       letterDialog.showModal();
@@ -131,10 +131,13 @@
   function createCelebration() {
     if (celebrationLayer.childElementCount) return;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const colors = ["#ff668e", "#ffbd8c", "#ffd789", "#f7a7c0", "#ffffff", "#c7afff"];
     const fragment = document.createDocumentFragment();
 
-    for (let index = 0; index < 46; index += 1) {
+    const heartCount = window.matchMedia("(max-width: 720px)").matches ? 20 : 36;
+    for (let index = 0; index < heartCount; index += 1) {
       const heart = document.createElement("i");
       heart.className = index % 4 === 0 ? "celebration-heart fa-solid fa-star" : "celebration-heart fa-solid fa-heart";
       heart.style.setProperty("--x", `${Math.random() * 100}%`);
@@ -152,9 +155,16 @@
   }
 
   function celebrate({ open = true } = {}) {
+    if (Date.now() < MEETING_AT) return;
     if (!hasCelebrated) {
       hasCelebrated = true;
       body.classList.add("is-together");
+      document.querySelector("#mainTitle").textContent = "A espera acabou. Agora é nós dois.";
+      document.querySelector(".hero__subtitle").textContent = "16 de outubro chegou. Que seja o começo de muitas lembranças juntos.";
+      document.querySelector("#letterButtonText").textContent = "Ler nossa carta";
+      openLetterButton.disabled = false;
+      openLetterButton.querySelector("i").className = "fa-regular fa-envelope-open";
+      document.querySelector(".letter-invitation").textContent = "Ana, chegou o dia. Estas palavras são para você.";
       createCelebration();
     }
 
@@ -252,7 +262,9 @@
     const container = document.querySelector("#floatingHearts");
     const fragment = document.createDocumentFragment();
 
-    for (let index = 0; index < 16; index += 1) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const heartCount = window.matchMedia("(max-width: 720px)").matches ? 5 : 10;
+    for (let index = 0; index < heartCount; index += 1) {
       const heart = document.createElement("i");
       heart.className = "floating-heart fa-solid fa-heart";
       heart.style.setProperty("--x", `${3 + Math.random() * 94}%`);
@@ -338,6 +350,90 @@
     });
   }
 
+  function setupBook() {
+    const scene = document.querySelector("#bookScrollScene");
+    const sticky = scene.querySelector(".book-sticky");
+    const book = document.querySelector("#storybook");
+    const leaves = [...book.querySelectorAll(".book-leaf")];
+    const ending = document.querySelector("#bookEnding");
+    const status = document.querySelector("#bookStatus");
+    const progressBar = document.querySelector("#bookProgress");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const spreadLabels = [
+      "A capa · Hyago & Ana",
+      "Como tudo começou · Para você, Ana",
+      "Muito além da tela · Hyago, daqui",
+      "Ana, daí · O próximo capítulo",
+      "Nossa história · Continua…",
+    ];
+    let frame = null;
+    let lastSpread = -1;
+    let displayedProgress = null;
+    let lastTime = 0;
+    const turnCount = leaves.length;
+
+    function render(timestamp = 0) {
+      frame = null;
+      const scrollDistance = Math.max(scene.offsetHeight - sticky.offsetHeight, 1);
+      const targetProgress = clamp(-scene.getBoundingClientRect().top / scrollDistance, 0, 1);
+      if (displayedProgress === null || reducedMotion.matches) {
+        displayedProgress = targetProgress;
+      } else {
+        const elapsed = clamp(timestamp - lastTime, 8, 48);
+        displayedProgress += (targetProgress - displayedProgress) * (1 - Math.exp(-elapsed / 100));
+        if (Math.abs(targetProgress - displayedProgress) < 0.00005) displayedProgress = targetProgress;
+      }
+      lastTime = timestamp;
+      const journey = displayedProgress * turnCount;
+      const readingSpread = Math.min(Math.floor(journey) + (journey % 1 >= 0.55 ? 1 : 0), turnCount);
+      let openAmount = 0;
+
+      leaves.forEach((leaf, index) => {
+        // Uma pausa de leitura antes e depois de cada virada.
+        const local = journey - index;
+        let amount = clamp((local - 0.20) / 0.70, 0, 1);
+        if (reducedMotion.matches) amount = local >= 0.55 ? 1 : 0;
+        const eased = amount * amount * (3 - 2 * amount);
+        if (index === 0) openAmount = eased;
+        const lift = Math.sin(eased * Math.PI) * 10;
+        leaf.style.transform = `translateZ(${lift.toFixed(3)}px) rotateY(${-180 * eased}deg)`;
+        leaf.style.zIndex = String(amount === 1 ? index + 1 : leaves.length * 2 - index);
+        leaf.style.setProperty("--leaf-shade", String(Math.sin(amount * Math.PI) * 0.22));
+        const front = leaf.querySelector(".book-page--front");
+        const back = leaf.querySelector(".book-page--back");
+        const visibleFront = index === readingSpread;
+        const visibleBack = index === readingSpread - 1;
+        front.setAttribute("aria-hidden", String(!visibleFront));
+        front.inert = !visibleFront;
+        if (back) {
+          back.setAttribute("aria-hidden", String(!visibleBack));
+          back.inert = !visibleBack;
+        }
+      });
+
+      ending.setAttribute("aria-hidden", String(readingSpread !== turnCount));
+      ending.inert = readingSpread !== turnCount;
+      book.classList.toggle("is-open", openAmount > 0.02);
+      book.style.setProperty("--book-shift", `${-25 * (1 - openAmount)}%`);
+      if (readingSpread !== lastSpread) {
+        status.textContent = spreadLabels[readingSpread];
+        lastSpread = readingSpread;
+      }
+      progressBar.style.width = `${displayedProgress * 100}%`;
+      if (displayedProgress !== targetProgress) scheduleRender();
+    }
+
+    function scheduleRender() {
+      if (frame === null) frame = window.requestAnimationFrame(render);
+    }
+    window.addEventListener("scroll", scheduleRender, { passive: true });
+    window.addEventListener("resize", scheduleRender, { passive: true });
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", scheduleRender, { passive: true });
+    reducedMotion.addEventListener("change", scheduleRender);
+    render();
+  }
+
+  setupBook();
   createAmbientHearts();
   setupPortraitMessages();
   setupLetter();
