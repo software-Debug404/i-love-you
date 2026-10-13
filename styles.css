@@ -173,6 +173,12 @@ a:focus-visible {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.sound-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .brand {
   width: max-content;
   display: inline-flex;

@@ -53,18 +53,32 @@
           <time datetime="2026-10-16">16 · OUT · 2026</time>
         </div>
 
-        <button
-          class="sound-button btn"
-          id="soundButton"
-          type="button"
-          aria-label="Tocar Te Assumi Pro Brasil ao vivo"
-          aria-pressed="false"
-          title="Te Assumi Pro Brasil (Ao Vivo)"
-        >
-          <span class="sound-button__halo" aria-hidden="true"></span>
-          <i class="fa-solid fa-music" aria-hidden="true"></i>
-          <span class="sound-button__text">Nossa música</span>
-        </button>
+        <div class="sound-controls">
+          <button
+            class="sound-button btn"
+            id="soundButton"
+            type="button"
+            aria-label="Tocar Te Assumi Pro Brasil ao vivo"
+            aria-pressed="false"
+            title="Te Assumi Pro Brasil (Ao Vivo)"
+          >
+            <span class="sound-button__halo" aria-hidden="true"></span>
+            <i class="fa-solid fa-music" aria-hidden="true"></i>
+            <span class="sound-button__text">Nossa música</span>
+          </button>
+          <button
+            class="sound-button btn"
+            id="secondSoundButton"
+            type="button"
+            aria-label="Tocar Vem Pra Minha Vida de Henrique e Juliano"
+            aria-pressed="false"
+            title="Henrique e Juliano — Vem Pra Minha Vida"
+          >
+            <span class="sound-button__halo" aria-hidden="true"></span>
+            <i class="fa-solid fa-music" aria-hidden="true"></i>
+            <span class="sound-button__text">Vem pra minha vida</span>
+          </button>
+        </div>
       </nav>
 
       <section class="hero" id="inicio" aria-labelledby="mainTitle">
@@ -337,6 +351,10 @@
         src="./Te%20Assumi%20Pro%20Brasil%20(Ao%20Vivo)%20%5Bhi-ehbG9lL4%5D.mp3.mp3"
         type="audio/mpeg"
       />
+    </audio>
+
+    <audio id="secondSoundtrack" preload="none" loop hidden>
+      <source src="./Henrique%20e%20Juliano%20-%20VEM%20PRA%20MINHA%20VIDA%20-%20DVD%20O%20Ce%CC%81u%20Explica%20Tudo%20-%20Henrique%20e%20Juliano.mp3.mp3" type="audio/mpeg" />
     </audio>
 
     <script src="script.js"></script>

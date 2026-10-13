@@ -22,8 +22,7 @@
   const closeLetterButton = document.querySelector("#closeLetter");
   const openLetterButton = document.querySelector("#openLetter");
   const celebrationLayer = document.querySelector("#celebrationLayer");
-  const soundButton = document.querySelector("#soundButton");
-  const soundtrack = document.querySelector("#soundtrack");
+  const soundtracks = [...document.querySelectorAll("audio")];
   const countElements = {
     days: document.querySelector("#days"),
     hours: document.querySelector("#hours"),
@@ -276,11 +275,13 @@
     });
   }
 
-  function setupSoundtrack() {
-    const songName = "Te Assumi Pro Brasil (Ao Vivo)";
+  function setupSoundtrack(buttonId, audioId, songName) {
+    const soundButton = document.querySelector(buttonId);
+    const soundtrack = document.querySelector(audioId);
     const soundIcon = soundButton.querySelector("i");
     const soundText = soundButton.querySelector(".sound-button__text");
 
+    const idleText = soundText.textContent;
     soundtrack.volume = 0.35;
 
     function updateSoundButton(isPlaying) {
@@ -289,7 +290,7 @@
       soundIcon.className = isPlaying
         ? "fa-solid fa-volume-high"
         : "fa-solid fa-music";
-      soundText.textContent = isPlaying ? "Tocando" : "Nossa música";
+      soundText.textContent = isPlaying ? "Tocando" : idleText;
       soundButton.removeAttribute("aria-busy");
       soundButton.disabled = false;
     }
@@ -306,6 +307,9 @@
       soundText.textContent = "Carregando…";
 
       try {
+        soundtracks.forEach((audio) => {
+          if (audio !== soundtrack) audio.pause();
+        });
         await soundtrack.play();
       } catch (_error) {
         soundButton.setAttribute("aria-pressed", "false");
@@ -337,7 +341,8 @@
   createAmbientHearts();
   setupPortraitMessages();
   setupLetter();
-  setupSoundtrack();
+  setupSoundtrack("#soundButton", "#soundtrack", "Te Assumi Pro Brasil (Ao Vivo)");
+  setupSoundtrack("#secondSoundButton", "#secondSoundtrack", "Vem Pra Minha Vida de Henrique e Juliano");
   updateCountdown();
   if (!hasCelebrated) countdownTimer = window.setInterval(updateCountdown, SECOND);
 
